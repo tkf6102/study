@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='cli' onclick='callBackfn'>点击</div>
+    <script>
+        /* 
+        概念: 多次只是执行一次,到时间以后再执行一次
+        1. 主要是把上一次的时间找地方存储,用了函数return
+        2. 区分两次时间差是使用时间戳对比
+         */
+        function throttle(func,time){
+            let pervious = 0
+            return function (){
+                let now = +new Date()
+                if(now - pervious > time){
+                    func.call(this,arguments)
+                    pervious = now
+                }
+            }
+        }
+        let ti = function(){
+            console.log(arguments);
+            console.log(this);
+        }
+        cli.onclick = throttle(ti, 2000)
+
+    </script>
+</body>
+
+</html>

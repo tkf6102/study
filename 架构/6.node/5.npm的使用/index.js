@@ -1,0 +1,1 @@
+console.log('这是一个入口文件') // 这个是本地package.json创建以后的入口文件

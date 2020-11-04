@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // function say() {
+        //     console.log('say');
+        // }
+        // Function.prototype.before = function(callback) {
+        //     return function () {
+        //         callback();
+        //         console.log(this);
+        //         this()
+        //     }
+        // }
+
+        // let sayBefore = say.before(function () {
+        //     console.log('before say');
+        // })
+        // sayBefore()
+
+
+        function say1(){
+            console.log('say1');
+        }
+        Function.prototype.before = function(callback){
+            console.log(this);
+            let that = this;
+            return function(){
+                callback()
+                that(); 
+            }
+        }
+        let beforesay = say1.before(function(){
+            console.log('before say');
+        })
+        beforesay()
+    </script>
+</body>
+
+</html>

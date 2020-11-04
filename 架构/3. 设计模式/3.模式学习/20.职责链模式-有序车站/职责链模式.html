@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // data 请求数据 及后面的参数
+    // dealType 相应数据处理对象
+    // dom 事件源
+    var sendData = function (data, dealType, dom) {
+      var xhr = new XMLHttpRequest(),
+        // 请求路径
+        url = ' https://www.easy-mock.com/mock/5e2a9a71c1918a3d8e4b2e5f/nba?';
+      xhr.onload = function () {
+        if ((xhr.status === 200 && xhr.status < 300) || xhr.status === 304) {
+          dealData(xhr.responseText, dealType, dom);
+        } else {
+          // 请求失败
+          alert('请求失败')
+        }
+      }
+      for (var i in data) {
+        url += '&' + i + '=' + data[i]
+      }
+      xhr.open('get', url, true)
+      xhr.send(null)
+
+    }
+    // sendData({},)
+    var dealData = function (data, dealType, dom) {
+      // 对象的tostring的简化使用
+      var dataType = Object.prototype.toString.call(data)
+      // var dataType = data.toString(); // 这样也行吧
+      switch (dealType) {
+        case 'sug':
+          // 如果数据为数组
+          if (dataType === '[object Array]') {
+            return createSug(data, dom)
+          }
+          // 将相应的对象数据转化为数组
+          if (dataType === '[object Object]') {
+            var newData = [];
+            for (var i in data) {
+              newData.push(i)
+            }
+            return createSug([data], dom)
+          }
+          break;
+        case 'validata':
+          // 常见效验组件
+          return createValidataResult(data, dom)
+          break;
+      }
+    }
+
+    var createSug = function (data, dom) {
+      var i = 0,
+        len = data.length,
+        html = '';
+      for (; i < len; i++) {
+        html += '<li>' + data[i] + '</li>'
+        dom.parentNode.getElementsByTagName('ul')[0].innerHTML = html;
+      }
+    }
+
+    var createValidataResult = function (data, dom) {
+      dom.parentNode.getElementsByTagName('span')[0].innerHTML = data;
+    }
+    dealData('用户名不正确', 'validate', input[0])
+    var input = document.getElementsByTagName('input');
+    input[0].onchange = function (e) {
+      sendData({
+        value: input[1].vale
+      }, 'sug', input[0])
+    }
+    input[1].onkeydown = function (e) {
+      sendData({
+        value: input[1].value
+      }, 'sug', input[1])
+    }
+  </script>
+</body>
+
+</html>

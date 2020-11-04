@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+     // 策略模式是对算法的封装,把算法单独抽离
+     // 状态模式是对状态的封装,把状态单独抽离
+    var Straegy = function () {
+      var staregyC = {
+        return30(price) {
+          return +price + (price / 100) * 30
+        }
+      }
+      return {
+        change(q, price) {
+          return staregyC[q] && staregyC[q](price)
+        },
+        add(name,fn){
+          debugger;
+          staregyC[name] = fn;
+          console.log(staregyC);
+        }
+
+      }
+    }
+    var a = new Straegy;
+    var b = a.change('return30', 100);
+    console.log(b);
+    var c = a.add('a1',function(price){
+      return +price + (price/100) *31
+    });
+    var d = a.change('a1',100)
+    console.log(d);
+    var e = Straegy();
+    console.log(e);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="div">防抖点击,只发送最后一次点击请求</button>
+    <script>
+        function debounce(func, wait) {
+            let time
+            return function () {
+                const context = this;
+                const args = arguments;
+                clearTimeout(time)
+                time = setTimeout(() => {
+                    func.call(context, args)
+                },wait)
+            }
+        }
+        let fn = function(){
+            console.log('防抖');
+        }
+        div.onclick = debounce(fn,2000)
+    </script>
+</body>
+
+</html>
