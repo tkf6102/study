@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let a = 1
+        let b = '1'
+        let c = true
+        let d = null 
+        let e = undefined
+        let f = []
+        let g = {}
+        console.log(typeof a);
+        console.log(typeof b);
+        console.log(typeof c);
+        console.log(typeof d);
+        console.log(typeof e);
+        console.log(typeof f);
+        console.log(typeof g);
+        console.log(f instanceof Object);
+    </script>
+    <script>
+        class Events{
+            events = []
+            on(fn){
+                this.events.push(fn)
+            }
+            emit(){
+                this.events.forEach((fn)=>{
+                    fn()
+                })
+            }
+            removeAll(){
+                this.events = []
+            }
+            // removeOne(id){
+            //     this.events.filter(item=>{
+            //         return item.id !== id
+            //     })
+            // }
+        }
+        debugger
+        let ev = new Events()
+        let testFn1 = function(){
+            console.log('测试函数1');
+        }
+        ev.on(testFn1)
+        console.log(ev);
+        let testFn2 = function(){
+            console.log('测试函数2');
+        }
+        ev.on(testFn2)
+        console.log(ev);
+        ev.emit()
+        console.log(ev);
+        ev.removeAll()
+        console.log(ev);
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "tsStudy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "1.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .a {
+            visibility: hidden;
+        }
+
+        .con:hover .a {
+            visibility: visible;
+            animation: opacity 1.5s ease-in;
+
+        }
+
+        @keyframes opacity {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="con">container
+        <div class="a" style="background-color: blue;">111</div>
+    </div>
+    <p>
+        1. 外层盒子hover事件 改变内部盒子颜色
+        2. 内部盒子颜色设置为隐藏,外层盒子hover将内部盒子做展示,并且设定动画效果
+        3. 动画效果需要制定名字,并且按照进度设置
+    </p>
+</body>
+
+</html>

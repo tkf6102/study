@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 其实就是圆形上return this
+        class A {
+            xx(par){
+                console.log(par);
+                return this
+            }
+        }
+        let b = new A()
+        b.xx('第一次调用').xx('第二次调用').xx('第三次调用')
+    </script>
+</body>
+</html>

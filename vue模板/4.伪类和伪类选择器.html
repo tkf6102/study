@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+        }
+        p{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            display: inline-block;
+        }
+        p::after{
+            content: '111';
+        }
+        p::before{
+            content: '111';
+            margin-left: 100px;
+        }
+        .div1{
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <p class="box"></p>
+    <span class="div1"></span>
+    <script>
+        // 1. 伪类: 就是特殊的类,用来选择一个常用选择器选择不到的地方
+        // 伪类选择器: 就是特殊的选择器
+        // :hover :active :link
+        // 2. 伪元素: DOM树里不存在的元素,但是用伪元素可以找的到
+        // ::before ::behind
+        // 伪元素: 特殊的元素,
+        // 1. 好像必须有content字段,不然就是无用的
+        // .a{
+        //     content:'##'
+        // }
+        // 2. 因为默认是 内联元素 如果想设定宽高需要显示转换为块级元素
+        // display:block
+        // 3. 会继承上级元素的字体
+
+    </script>
+</body>
+
+</html>

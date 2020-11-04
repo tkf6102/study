@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+    <div id="app">
+        <h1>Hello App!</h1>
+        <p>
+            <router-link to="/foo">Go to Foo</router-link>
+            <router-link to="/bar">Go to Bar</router-link>
+            <button @click='goFoo'>go Foo</button>
+            <button @click='goBar'>go Bar</button>
+        </p>
+        <router-view></router-view>
+    </div>
+    <script>
+        /*      1. 每次使用replace都是替换上一次的记录
+                2. push是在路由列表后面追加  */
+
+        const Foo = { template: '<div>foo</div>' }
+        const Bar = { template: '<div>bar</div>' }
+        const routes = [
+            { name: 'foo', path: '/foo', component: Foo },
+            { name: 'bar', path: '/bar', component: Bar }
+        ]
+        const router = new VueRouter({
+            routes
+        })
+        const app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!'
+            },
+            methods: {
+                goFoo() {
+                    // this.$router.push({
+                    //     name:'foo'
+                    // })
+                    this.$router.replace({
+                        name: 'foo'
+                    })
+                },
+                goBar() {
+                    // this.$router.push({
+                    //     name:'bar'
+                    // })
+                    this.$router.replace({
+                        name: 'bar'
+                    })
+                },
+            },
+            router
+        }).$mount('#app')
+
+// 现在，应用已经启动了！
+    </script>
+</body>
+
+</html>

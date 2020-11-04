@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 只能get请求 --> 
+    <!-- 不安全,因为需要把代码appchild到页面里 -->
+    <!-- 类似于这样cdn的直接请求一个路径,这样是不受同源影响的 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        function jsonp({url,params,cb}){
+            return new Promise((resolve,reject)=>{
+                let script = document.createElement('script')
+
+                window[cb] = function(data){
+                    resolve(data)
+                    document.body.removeChild(script)
+
+                }
+                params = {...params,cb}
+                let arrs = []
+                for(let key in params){
+                    arrs.push(`${key}=${params[key]}`)
+                }
+                script.src = `${url}?${arrs.join('&')}`
+                document.body.appendChild(script)
+            })
+        }
+        function show(data){
+            
+        }
+        jsonp({ 
+            url:'http://localhost:3000/say', // 路径
+            params:{wd:'我爱你'}, // 给定参数
+            cb:'show' // 把自身的show函数给到回调里,在其想传递数据回来的时候,通过cb回调
+            
+        }).then(data=>{
+            console.log(data);
+        })
+        /* 
+        用法:
+        1. jsonp执行,提交localhost:3000/say 的get接口
+        2. server.js 右键run code执行
+        3. 本地接受数据
+        */
+    </script>    
+</body>
+</html>

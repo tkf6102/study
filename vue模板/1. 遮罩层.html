@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="opacity">
+                <div @click='nextPage'>下一页</div>
+            </div>
+            <div>
+                {{ a }}
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!',
+                active: 1,
+                a:'' || '我是原有的默认值',
+            },
+            created(){
+              setTimeout(()=>{
+                  this.a = 22
+                  console.log(this);
+              },2000)  
+            },
+            methods: {
+                nextPage() {
+                    this.active += 1;
+                }
+            }
+        })
+    </script>
+    <style>
+        html,
+        body,
+        #app {
+            height: 100%;
+            margin: 0;
+            /* background: rgb(219, 154, 154); */
+
+        }
+        .container{
+            background: rgba(0, 0, 0, .4);
+            height: 100%;
+        }
+        .opacity {
+            /* margin-top: 50px; */
+            width: 30%;
+            margin-left: 50px;
+            /* margin-top: 20%; */
+            height: 30%;
+            background: red;
+        }
+    </style>
+</body>
+
+</html>
