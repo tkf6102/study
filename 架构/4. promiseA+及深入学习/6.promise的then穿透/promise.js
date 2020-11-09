@@ -1,12 +1,44 @@
-console.log('myPromise2');
+console.log('myPromise3');
+//  promises-aplus-tests promise测试包
 const ENUM = {
     PENDING: "PENDING",
     ONFULFILLED: "ONFULFILLED",
     ONREJECTED: "ONREJECTED"
 }
-// 解析这个返回值x的类型,来判定promise2是resolve还是reject
 const resolvePromise = (x, promise2, resolve, reject) => {
-    // console.log(x, promise2, resolve, reject);
+    if (x === promise2) {
+        reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
+    }
+    if ((typeof x === 'object' && x !== null) || x === 'function') {
+        let called;
+        try {
+            let then = x.then
+            if (typeof then === 'function') {
+                then.call(x, y => {
+                    resolvePromise(y,promise2,resolve,reject) 
+                    if(called)return 
+                    called = true
+                }, r => {
+                    if(called)return 
+                    called = true
+                    reject(r)
+                })
+            } else {
+                if(called)return
+                called = true
+                resolve(x)
+            }
+        } catch (e) {
+            if(called)return
+            called = true
+            reject(e)
+        }
+    } else { 
+        if(called)return
+        called = true
+        resolve(x)
+    }
+
 }
 class Promise {
     constructor(executor) {
@@ -37,21 +69,21 @@ class Promise {
         }
     }
     then(onFulfilled, onRejected) {
-        // 每次then的时候都返回一个新的promise 所以需要new一个值
-        // 每次then直接创造一个新的promise返回(以前是每次都只是处理结果,现在是创建一个新的promise2,在promise2里处理原有结果.并且根据返回值x来判定新new的promise2的resolve执行还是reject执行)
-        let promise2 = new Promise((resolve, reject) => { // 此处new 自己
+         // 此处是为了使用.then时刻不传入函数,做的穿透处理 即如果onFulfilled如果不是个函数(也许是个undefined),就设定v=>v(也就是传入什么参数就返回什么参数)
+        onFulfilled=   typeof onFulfilled === 'function'? onFulfilled: v=>v
+        // 如果.then里不传入失败函数,就向后传递. 最后只要传入失败函数就接受
+        onRejected=   typeof onRejected === 'function'? onRejected: err=>{throw err}
+        let promise2 = new Promise((resolve, reject) => { 
             if (this.state == ENUM.ONFULFILLED) {
-                // 成功回调(onFullfiled)或者失败回调(onRejected)不能在当前context中执行,所以用定时器(异步)处理
                 setTimeout(() => {
-                    try { // try catch外层直接执行的时候无法处理到异步的地方
-                        let x = onFulfilled(this.value) // 根据每次成功方法的返回值来控制下一次promise的进度
-                        // 解析这个返回值x的类型,来判定promise2是resolve还是reject
+                    try { 
+                        let x = onFulfilled(this.value) 
                         resolvePromise(x, promise2, resolve, reject)
                     } catch (error) {
                         reject(error)
                     }
-      
-                },0)
+
+                }, 0)
 
             }
             if (this.state == ENUM.ONREJECTED) {
@@ -62,8 +94,8 @@ class Promise {
                     } catch (error) {
                         reject(error)
                     }
-     
-                },0)
+
+                }, 0)
 
             }
             if (this.state == ENUM.PENDING) {
@@ -75,8 +107,8 @@ class Promise {
                         } catch (e) {
                             reject(e)
                         }
-     
-                    },0)
+
+                    }, 0)
 
                 })
                 this.onRejectedCallBacks.push(() => {
@@ -87,13 +119,23 @@ class Promise {
                         } catch (e) {
                             reject(e)
                         }
-  
-                    },0)
+
+                    }, 0)
 
                 })
             }
         })
         return promise2
     }
+}
+
+// npm install promises-aplus-tests -g 然后在cmd(控制台) promises-aplus-tests promise.js直接测试就可以
+Promise.defer = Promise.deferred  = function(){
+    let dfd = {}
+    dfd.promise = new Promise((resolve,reject)=>{
+        dfd.resolve = resolve;
+        dfd.reject = reject;
+    })
+    return dfd
 }
 module.exports = Promise

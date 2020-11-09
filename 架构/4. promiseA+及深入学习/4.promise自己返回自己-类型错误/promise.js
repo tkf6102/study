@@ -7,6 +7,9 @@ const ENUM = {
 // 解析这个返回值x的类型,来判定promise2是resolve还是reject
 const resolvePromise = (x, promise2, resolve, reject) => {
     // console.log(x, promise2, resolve, reject);
+    if(x === promise2){
+        reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
+    }
 }
 class Promise {
     constructor(executor) {

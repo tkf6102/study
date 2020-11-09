@@ -16,7 +16,8 @@ let Promise = require('./promise-then链式调用.js')
 let fs = require('fs')
 let read = function(url){
         return new Promise((resolved,rejected)=>{
-                throw new error('错误1')
+                // throw new Error('错误1')
+                // rejected(100)
                 resolved(100)
                 // fs.readFile(url,'utf8',function(err,data){
                 //         if(err){
@@ -29,6 +30,8 @@ let read = function(url){
 let promise2= read().then((data)=>{
         console.log(data);
         return '123'
+},err=>{
+        console.log(err);
 })
 promise2.then(data=>{
         console.log('success',data);
