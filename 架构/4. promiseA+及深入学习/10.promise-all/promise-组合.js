@@ -31,6 +31,7 @@ Promise.all1 = function (values) {
 
 
 }
+
 let p1 = new Promise((resolve, reject) => {
         setTimeout(() => {
                 resolve('ok')
@@ -42,6 +43,7 @@ let p2 = new Promise((resolve, reject) => {
                 // reject('fail')
         }, 2000)
 })
+
 Promise.all1([1, 2, 3, p1, p2]).then(data => { //原生=> 所有值都是true以后才能触发then值value到下一个then或者reject(catch)里
         // 按照[]的方式存放data
         console.log(data);
