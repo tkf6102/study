@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script>
+        let a = 1;
+        a = 100
+        let observe = new MutationObserver(()=>{
+            console.log(a);
+        })
+        a = 200
+
+        // setImmediate(()=>{ // 只是ie有这个方法
+        //     console.log(111);
+        // })
+    </script>
+</body>
+</html>

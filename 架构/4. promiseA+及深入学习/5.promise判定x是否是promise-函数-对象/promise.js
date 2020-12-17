@@ -13,7 +13,7 @@ const resolvePromise = (x, promise2, resolve, reject) => {
         reject(new TypeError('Chaining cycle detected for promise #<Promise>'))
     }
     // Otherwise, if x is an object or function,
-    if ((typeof x === 'object' && x !== null) || x === 'function') {
+    if ((typeof x === 'object' && x !== null) || typeof x === 'function') {
 
 
         // 这里解析的x,如果是一个别人家的promise的话,人家既调用成功,又调用失败,不管他们,只是使用第一次的值
