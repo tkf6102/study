@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="my-lucky"></div>
+    <script src="https://cdn.jsdelivr.net/npm/lucky-canvas/dist/lucky-canvas.umd.min.js"></script>
+    <script>
+
+        // 大转盘抽奖
+        let luckyWheel = new LuckyCanvas.LuckyWheel({
+            el: '#my-lucky',
+            width: '300px',
+            height: '300px',
+        }, {
+            // ...你的配置
+            blocks: [
+                { padding: '10px', background: '#ffc27a' },
+                { padding: '10px', background: '#ff4a4c' },
+                { padding: '0px', background: '#fff' }
+            ],
+            prizes: [
+                { fonts: [{ text: '0' }], background: '#f8d384' },
+                { fonts: [{ text: '1', top: '20px' }], background: '#f9e3bb' },
+                { fonts: [{ text: '2', top: '100%' }], background: '#fff' }
+            ],
+            buttons: [
+                { radius: '40px', background: '#d64737' },
+                { radius: '35px', background: '#f6c66f', pointer: true },
+                {
+                    radius: '30px',
+                    background: '#fff',
+                    fonts: [{ text: '开始', top: '-13px' }]
+                }
+            ]
+        })
+
+        // 九宫格抽奖
+        // let luckyGrid = new LuckyCanvas.LuckyGrid({
+        //     el: '#my-lucky',
+        //     width: '300px',
+        //     height: '300px',
+        // }, {
+        //     // ...你的配置
+        // })
+
+    </script>
+</body>
+
+</html>

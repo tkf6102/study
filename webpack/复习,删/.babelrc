@@ -1,9 +1,0 @@
-{ // 这里是babel预设,也就是es6转换es5的地方 之前的babel只是把babel里识别js代码
-  "presets":[
-    ["@babel/preset-env",{  // 只要里面需要单独配置,就要写成数组 不然字符串就可以 
-      "useBuiltIns":"useage", // 只是转换使用的api
-      "corejs":3 // 类似于babel/pollfill 转换高版本api 类似于async/await 
-    }]
-  ], // 这个是预设插件的集合,执行是从下往上
-  "plugins":[] // 一个个插件的插件的集合是从上往下
-}
