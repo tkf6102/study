@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file" id="inp">
+    <!-- 前端实现下载功能,下载excel/预览功能/支付宝的二维码支付功能 -->
+
+    <!-- 下载excel -->
+    <script>
+/*         
+        let str = `<h2> 你好 </h2>` // 假如下载excel
+        // blob文件格式
+        let blob = new Blob([str],{// blob第一个参数是文件流,数组形式传入
+            type:'text/html' // 第二个参数是对象,里面的type可以需要告诉blob不同的传入类型
+        })
+        let aElement = document.createElement('a') // 创建一个a元素
+        aElement.setAttribute('download','index.html') // 设置一个下载属性,并且给名字
+        aElement.href = URL.createObjectURL(blob) // 产生临时路径 
+        aElement.innerText = 'a标签' // 给a标签一个内容
+        document.body.appendChild(aElement) // 放到页面里 */
+    </script>
+    <!-- 预览功能 -->
+    <script>
+        // 常用 
+        // inp.addEventListener('change',(e)=>{
+        //     let file = e.target.files[0];
+        //     let img = new Image()
+        //     img.src=URL.createObjectURL(file)
+        //     document.body.appendChild(img)
+        // })
+        // 不常用
+ /*        inp.addEventListener('change',(e)=>{
+            let file = e.target.files[0];
+            let fileReader = new FileReader() // 文件太大会卡
+            fileReader.onload = ()=>{ // 监听自身属性有更改就会触发?
+                console.log(fileReader);
+                let img = new Image()
+                img.src= fileReader.result // 可能会把阅读的属性传递到自身的result上
+                document.body.appendChild(img)
+            }
+            fileReader.readAsDataURL(file) // 阅读了一个对象url,这个是base64格式的
+        }) */
+    </script>
+    <script>
+        // 浏览器中的ArrayBuffer 
+        // 水印是canvas做的
+    </script>
+</body>
+</html>
