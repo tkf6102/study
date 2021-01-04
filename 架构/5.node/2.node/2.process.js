@@ -3,7 +3,7 @@
     // process.argv // 设置参数,在程序执行时,传入一些用户定义的参数 (拿过来做本次执行的参数列表)
         // create --config xxx   识别-- 为key 后面跟随的是value值
     // process.cwd() // 相对路径,在哪里执行就是那个路径,经常不准
-    // __dirname 是全局变量,每次webpack打包都会把文件做成自执行函数,给他传入__dirname就是绝对路径
+    // __dirname 是全局变量,每次webpack打包都会把文件做成自执行函数,给他传入__dirname就是绝对路径,但是__dirname是父级路径,需要加上文件名
 
 
 // 常用包(不用自己处理argv)
