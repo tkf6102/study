@@ -1,14 +1,15 @@
 // 内置模块
 const fs = require('fs').promises; // 不再用回调,直接走promise的方式
-const { createReadStream,readFileSync } = require('fs'); // 继续使用回调
+const { createReadStream, readFileSync } = require('fs'); // 继续使用回调
 const path = require('path');
-const template = readFileSync(path.join(__dirname,'template3.html'),'utf8')
+const template = readFileSync(path.join(__dirname, 'template3.html'), 'utf8')
 const http = require('http');
 const url = require('url')
 // 第三方模块
 const mime = require('mime'); // 可以从浏览器得到返回的文件类型
 const ejs = require('ejs'); // 模板引擎
 const chalk = require('chalk')
+const crypto = require('crypto')
 // 服务核心
 class Server {
     constructor(options) {
@@ -25,16 +26,17 @@ class Server {
         pathname = decodeURIComponent(pathname)
         let filePath = path.join(this.directory, pathname);
         try {
+            console.log(filePath,',--------------------------------')
             let fileObj = await fs.stat(filePath); // 这个方法也可以判断文件的存在性
             if (fileObj.isFile()) { // 如果是文件就返回文件
-                this.handleFile(filePath,req,res)
+                this.handleFile(filePath, req, res, fileObj)
             } else {
                 console.log(4);
                 // 如果是文件夹,就返回文件目录
                 // temp.js就是执行把目录文件获取,然后录入
-                let dirs =await fs.readdir(filePath); // 拿到目录
+                let dirs = await fs.readdir(filePath); // 拿到目录
                 // 模板里面需要解析和目录相同字段'dirs'值的
-                let renderTemplate =await ejs.render(this.template,{dirs},{async:true}) // 用ejs渲染模板
+                let renderTemplate = await ejs.render(this.template, { dirs }, { async: true }) // 用ejs渲染模板
                 res.end(renderTemplate)
             }
         } catch (e) {
@@ -42,10 +44,34 @@ class Server {
             this.handleError(e, req, res)
         }
     }
-    handleFile(filePath, req, res) {
+    md5(val) {
+        return crypto.createHash('md5').update(val).digest('base64')
+    }
+    cache(filePath, req, res, fileObj) {
+        let cTime = fileObj.ctime.toGMTString();
+        let md5 = this.md5(fs.readFileSync(filePath)); // 此处是全部文件,可以不用这么写,比较浪费性能
+        res.setHeader('Cache-Contral','max-age=10')
+        res.setHeader('Expires',new Date(Date.now() + 10*1000).toGMTString())
+        res.setHeader('Last-Modified', cTime);
+        res.setHeader('Etag', md5)
+        res.setHeader('Content-Type', mime.getType(filePath) + ';charset=utf-8')
+        if (req.headers['if-none-match'] == md5) {
+            return false;
+        }
+        if (req.headers['if-modified-since'] == cTime) {
+            return false
+        }
+        return true;
+    }
+    handleFile(filePath, req, res, fileObj) {
         // node中都是utf-8的,但是浏览器不知道是什么编码
         // 需要通过header的方式告诉他
-        res.setHeader('Content-Type', mime.getType(filePath) + ';charset=utf-8')
+        // let cache = this.cache(filePath, req, res, fileObj)
+        // if (!cache) {
+        //     res.statusCode = 304;
+        //     res.end()
+        // }
+        console.log(arguments);
         createReadStream(filePath).pipe(res)
         // 方式1       
         //  let content = await fs.readFile(filePath); // 读取Buffer码
