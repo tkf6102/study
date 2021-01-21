@@ -26,10 +26,12 @@ class Server {
         pathname = decodeURIComponent(pathname)
         let filePath = path.join(this.directory, pathname);
         try {
-            console.log(filePath,',--------------------------------')
-            let fileObj = await fs.stat(filePath); // 这个方法也可以判断文件的存在性
-            if (fileObj.isFile()) { // 如果是文件就返回文件
-                this.handleFile(filePath, req, res, fileObj)
+            // console.log(filePath, ',--------------------------------')
+            // let fileObj = await fs.stat(filePath); // 这个方法也可以判断文件的存在性
+            this.handleFile(filePath, req, res)
+
+            if (11) {
+                 // 如果是文件就返回文件
             } else {
                 console.log(4);
                 // 如果是文件夹,就返回文件目录
@@ -50,8 +52,8 @@ class Server {
     cache(filePath, req, res, fileObj) {
         let cTime = fileObj.ctime.toGMTString();
         let md5 = this.md5(fs.readFileSync(filePath)); // 此处是全部文件,可以不用这么写,比较浪费性能
-        res.setHeader('Cache-Contral','max-age=10')
-        res.setHeader('Expires',new Date(Date.now() + 10*1000).toGMTString())
+        res.setHeader('Cache-Contral', 'max-age=10')
+        res.setHeader('Expires', new Date(Date.now() + 10 * 1000).toGMTString())
         res.setHeader('Last-Modified', cTime);
         res.setHeader('Etag', md5)
         res.setHeader('Content-Type', mime.getType(filePath) + ';charset=utf-8')
@@ -63,7 +65,17 @@ class Server {
         }
         return true;
     }
-    handleFile(filePath, req, res, fileObj) {
+    gzip(filePath, req, res, fileObj){
+        let gzipHead = req.headers['accept-encoding'];
+        console.log(gzipHead);
+        if(gzipHead.inclouds('gzip')){
+            res.setHeader('Content-Encoding','gzip');
+            return zlib.createGzip()
+        }else{
+            return false
+        }
+    }
+    async handleFile(filePath, req, res, fileObj) {
         // node中都是utf-8的,但是浏览器不知道是什么编码
         // 需要通过header的方式告诉他
         // let cache = this.cache(filePath, req, res, fileObj)
@@ -71,8 +83,15 @@ class Server {
         //     res.statusCode = 304;
         //     res.end()
         // }
-        console.log(arguments);
-        createReadStream(filePath).pipe(res)
+        console.log('111111111');
+        // 此处设定压缩,如果支持压缩就使用.不然就直接走原来的逻辑
+        if (this.gzip(filePath, req, res, fileObj)) {
+            createReadStream(filePath).pipe(zlib.createGzip()).pipe(res)
+        } else {
+            createReadStream(filePath).pipe(res)
+
+        }
+        // console.log(arguments);
         // 方式1       
         //  let content = await fs.readFile(filePath); // 读取Buffer码
         // res.end(content) // end可以接受读取的Buffer码并写入页面中 
