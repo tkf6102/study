@@ -3,20 +3,19 @@
 const Koa = require('./koa源码模拟'); 
 // const Koa = require('koa'); 
 
+const fs = require('fs');
+const path = require('path')
+
 const app = new Koa();
 
 app.use(ctx=> { // 封装了扩展了ctx
     // 1)ctx每次请求都是创建一个全新的
     // 2)创建多个应用,每次上下文也应该都是新的
     // req就是原生方法
+    // req就是原生方法
     // request就是封装方法
-    // console.log(ctx.req.url);
-    // console.log(ctx.request.url);
-    // console.log(ctx.url,'---');
-    // console.log(ctx.path,'---path---');
-    ctx.body = 'hello';
-    console.log(ctx.response.body);
-    // ctx.body = 'ctx'
+    ctx.body = {name:'zf'};
+    // ctx.body = fs.readFileSync(path.join(__dirname,'./note.md'))
 })
 // 如果是监控多个端口,不希望是同一个人的数据
 app.listen(3004, () => {

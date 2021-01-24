@@ -33,6 +33,6 @@ function defineSetter(target, keys) {
     }
 }
 defineGetter('request', ['url', 'query', 'path'])
-defineGetter('request', ['body'])
+defineGetter('response', ['body'])
 defineSetter('response',['body'])
 module.exports = proto;
