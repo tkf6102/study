@@ -4,7 +4,8 @@ const router  = new Router({
     prefix:'/user'
 });
 
-router.get('/add',UserControl.get);
+// 后端设计为post请求,前端访问就需要使用post请求,不然就是method Not Allowed
+router.post('/add',UserControl.get);
 
 router.get('/remove',UserControl.remove);
 

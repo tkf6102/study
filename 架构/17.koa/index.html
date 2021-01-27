@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 1.右键 open with live server 才能启动服务
+        // 2.启动一个页面,访问http://localhost:3000/user/add这个端口,所以需要在3.koa-router实现里右键Run Code执行代码=>启动服务
+        
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:3000/user/add", true);
+        xhr.withCredentials = true;
+        // 复杂请求: get/post加请求头
+        xhr.setRequestHeader('auth',1)
+        xhr.onload = function () {
+            console.log(xhr.responseText);
+        }
+        xhr.send();
+    </script>
+</body>
+
+</html>
