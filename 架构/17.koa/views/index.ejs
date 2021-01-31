@@ -6,8 +6,22 @@
     <title>Document</title>
 </head>
 <body>
-    <%list.forEach(l=>{%>
-        <li><%=l%></li>
-    <%})%>
+    <!-- 请求get 或者post 一般分为
+       1. json {a:1}
+       2. querystring a=1&b=2 
+       3. 文件的二进制multipart-formdata -->
+    <!-- 传送表单默认是post,不能是put -->
+    <!-- enctype="application/x-www-form-urlencoded"是默认格式,传递的是a=1&b=2格式 -->
+    <!-- enctype必须改为multipart-formdata才能上传文件 -->
+    <!-- 表单默认不跨域,天生设置,规范 -->
+    <form action="/article/upload" method="post" enctype="multipart/form-data">
+        <!-- input只有在设定了name的时候js才能识别他们的值 -->
+        <input type="file" name='article'> 
+        <input type="text" name="username">
+        <input type="text" name="password">
+        <!-- 提交一个隐藏表单,校验名称是否合法 -->
+        <!-- <input type="hidden" name="xx"> -->
+        <button>提交</button>
+    </form>
 </body>
 </html>

@@ -7,6 +7,7 @@ const router  = new Router({
 router.get('/add',ArticleControl.get);
 
 router.get('/remove',ArticleControl.remove);
+router.post('/upload',ArticleControl.upload);
 
 module.exports = router;
 
