@@ -1,0 +1,12 @@
+## vue2 vue3区别
+- vue2 所有代码在一个包里管理,很复杂.
+  - 类型推断flow,不准确
+  - Object.definedProperty 对对象递归(深度遍历) ,对每个属性get/set性能不高
+  - optionsApi
+- monorepo是vue3 所有代码放在packages的多个包里 举例: 可以单独使用模块 
+  - ts类型检测更强
+  - tree-shaking  不使用不会被打包
+  - proxy 是天然拦截器 不需要改写get/set 只是对最外层属性做代理,取哪个值,才会对哪个值做代理(懒拦截)
+  - 模板编译进行优化(vue2是判断父节点是遍历整个树),形成`Bolck Tree`,对动态数据单独提取,静态根本不会对比.  `patchFlag'标记动态节点
+  - compostionApi进行组织功能,解决反复横跳 一个功能放到一起,而不是放到不同的逻辑里
+  - 可以多个div,因为外层增加了一个Fragment(虚拟节点)

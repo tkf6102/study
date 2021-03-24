@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 反射性: 前端给啥,后端返回什么
+        // 如果前端提交的是<script><\/script> 
+        // chrome识别到xss攻击,就会屏蔽. 
+        // 后端设置httponly 不能用服务端获取 document.cookie
+
+
+        // 第二个功能  DOM-based
+        // 一个输入框,输入图片的网址,提交以后就把图片放到列表中去
+        // 修改属性,插入内容(图片的src),document.write(写入内容) 都会执行新传入的脚本
+    </script>
+</body>
+</html>

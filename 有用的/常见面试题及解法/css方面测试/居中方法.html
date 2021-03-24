@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        div {
+            width: 500px;
+            height: 500px;
+            background-color: skyblue;
+            border: 1px solid #000;
+            position: relative;
+        }
+
+        .son {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            /* 按照自身元素计算 */
+            transform: translateX(-50%) translateY(-50%); 
+        }
+    </style>
+</head>
+
+<body>
+    // 不知道宽高让元素居中的两种方法:
+    1. flex: display: flex; jus+alignitem = center
+    2. 父级相对定位,子元素 决定定位 然后宽高绝对定位50%,然后transtform: translateX/Y(-50%): 
+    <div>
+        <p class="son"></p>
+    </div>
+</body>
+
+</html>

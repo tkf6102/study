@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+    <div id="app">
+        <template>
+            <childcom :name="name" :age="age" type="text"></childcom>
+        </template>
+    </div>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            'name': 'test',
+            props: [],
+            data() {
+                return {
+  
+                }
+            },
+            components: {
+                'childcom': {
+                    inheritAttrs: false,
+                    props: ['name', 'age'],
+                    template: `<input type="number" style="border:1px solid blue">`,
+                    created() {
+                        console.log(this.$attrs.type)
+                    }
+                }
+            }
+        }).$mount('#app')
+
+// 现在，应用已经启动了！
+    </script>
+</body>
+
+</html>

@@ -12,7 +12,5 @@ let fb = function(len){
         count: num,
         fb:arr
     }
-
-    console.log('是数字');
 }
 console.log(fb(0));

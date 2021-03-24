@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let obj = {
+            a: 1,
+            b: undefined,
+            c: {
+                d: 2,
+                xx: null
+            }
+        }
+        function deepClone(obj = {}) {
+            let o = {}
+            if (typeof obj === 'object' && obj !== null) {
+                let filter = [undefined, null]
+                for (let k in obj) {
+                    console.log(k);
+                    if (typeof obj[k] !== 'function' && !filter.includes(obj[k])) {
+                        if (typeof obj[k] == 'object') {
+                          o[k]  = deepClone(obj[k])
+                            continue
+                        }
+                        o[k] = obj[k];
+                    }
+                }
+            }
+            return o
+        }
+
+        console.log(deepClone(obj));
+    </script>
+</body>
+
+</html>
